@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
 			$table->foreignId('patient_id')->constrained()->cascadeOnDelete();
+			$table->foreignId('doctor_id')->nullable()->constrained()->nullOnDelete();
 			$table->string('queue_number');
 			$table->enum('status', ['waiting', 'called', 'in_consultation', 'completed', 'no_show', 'cancelled'])
 				->default('waiting');
