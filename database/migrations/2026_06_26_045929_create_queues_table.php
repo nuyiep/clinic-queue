@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
+			$table->foreignId('patient_id')->constrained()->cascadeOnDelete();
+			$table->string('queue_number');
+			$table->enum('status', ['waiting', 'called', 'in_consultation', 'completed', 'no_show', 'cancelled'])
+				->default('waiting');
+			$table->enum('priority', ['normal', 'urgent'])->default('normal');
+			$table->date('queue_date');
+			$table->timestamp('checked_in_at')->nullable();
+			$table->timestamp('called_at')->nullable();
+			$table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
     }
